@@ -7,10 +7,8 @@ interface InputFormProps {
 }
 
 const CURRENT_SOLUTIONS = [
-  { value: 'manual', label: 'Handmatig / Excel' },
-  { value: 'bankcard', label: 'Bankpas' },
-  { value: 'prepaid', label: 'Andere prepaid kaart' },
-  { value: 'creditcard', label: 'Creditcard' },
+  { value: 'bankpas_creditcard', label: 'Bankpas / Creditcard' },
+  { value: 'declaratie_tool', label: 'Declaratie oplossing / Tool' },
 ] as const;
 
 export function InputForm({ values, onChange, onSubmit }: InputFormProps) {
@@ -39,7 +37,7 @@ export function InputForm({ values, onChange, onSubmit }: InputFormProps) {
       <div className="form-fields">
         <div className="form-group">
           <label htmlFor="employees">
-            Aantal medewerkers met betaalkaarten
+            Aantal medewerkers die meer dan 1x per maand onkosten maken
           </label>
           <input
             type="number"
@@ -54,7 +52,7 @@ export function InputForm({ values, onChange, onSubmit }: InputFormProps) {
 
         <div className="form-group">
           <label htmlFor="monthlySpend">
-            Gemiddelde maandelijkse uitgaven
+            Gemiddeld bedrag van onkosten per medewerker
           </label>
           <div className="input-with-prefix">
             <span className="input-prefix">€</span>

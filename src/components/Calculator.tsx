@@ -10,7 +10,7 @@ const DEFAULT_INPUTS: CalculatorInputs = {
   employees: 0,
   monthlySpend: 0,
   hoursPerMonth: 0,
-  currentSolution: 'manual',
+  currentSolution: 'bankpas_creditcard',
 };
 
 export function Calculator() {

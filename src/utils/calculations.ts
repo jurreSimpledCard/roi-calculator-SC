@@ -2,7 +2,7 @@ export interface CalculatorInputs {
   employees: number;
   monthlySpend: number;
   hoursPerMonth: number;
-  currentSolution: 'manual' | 'bankcard' | 'prepaid' | 'creditcard';
+  currentSolution: 'bankpas_creditcard' | 'declaratie_tool';
 }
 
 export interface CalculatorResults {
@@ -17,14 +17,12 @@ export interface CalculatorResults {
 
 // Efficiency multipliers based on current solution
 const EFFICIENCY_MULTIPLIERS: Record<CalculatorInputs['currentSolution'], number> = {
-  manual: 0.75,      // Highest savings - manual processes are most inefficient
-  bankcard: 0.65,    // Good savings - bank cards lack expense management
-  prepaid: 0.50,     // Moderate savings - some automation already exists
-  creditcard: 0.60,  // Good savings - typically poor expense tracking
+  bankpas_creditcard: 0.65,  // Higher savings - bank/credit cards lack expense management
+  declaratie_tool: 0.50,     // Lower savings - declaration tools have some automation
 };
 
 // Constants
-const HOURLY_RATE = 45; // Average hourly rate in EUR
+const HOURLY_RATE = 90; // Average hourly rate in EUR
 const PROCESS_SAVINGS_PER_EMPLOYEE = 15; // EUR per employee per month
 
 // SimpledCard Essential + Business Accounts (DGS) pricing (as of 1-7-2025)
