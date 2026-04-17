@@ -53,16 +53,16 @@ export function InputForm({ values, onChange, onSubmit }: InputFormProps) {
 
         <div className="form-group">
           <label htmlFor="monthlySpend">
-            Gemiddeld bedrag van onkosten per medewerker
+            Gemiddelde onkosten per medewerker per maand
           </label>
           <div className="input-with-prefix">
             <span className="input-prefix">€</span>
             <input
               type="number"
               id="monthlySpend"
-              min="100"
-              max="10000000"
-              placeholder="bijv. 15.000"
+              min="5"
+              max="10000"
+              placeholder="bijv. 250"
               value={values.monthlySpend || ''}
               onChange={(e) => handleChange('monthlySpend', parseInt(e.target.value) || 0)}
             />
