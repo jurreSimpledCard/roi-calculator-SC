@@ -23,8 +23,9 @@ export function useAnimatedCounter(
 
   useEffect(() => {
     if (!isActive) {
-      setCurrentValue(0);
-      return;
+      // Use rAF to avoid synchronous setState in effect
+      const id = requestAnimationFrame(() => setCurrentValue(0));
+      return () => cancelAnimationFrame(id);
     }
 
     const animate = (timestamp: number) => {

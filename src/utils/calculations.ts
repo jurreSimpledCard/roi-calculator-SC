@@ -2,7 +2,7 @@ export interface CalculatorInputs {
   employees: number;
   monthlySpend: number;
   hoursPerMonth: number;
-  currentSolution: 'bankpas_creditcard' | 'declaratie_tool';
+  currentSolution: 'voorschot_declaratie' | 'bankpas_creditcard' | 'declaratie_tool';
 }
 
 export interface CalculatorResults {
@@ -17,8 +17,9 @@ export interface CalculatorResults {
 
 // Efficiency multipliers based on current solution
 const EFFICIENCY_MULTIPLIERS: Record<CalculatorInputs['currentSolution'], number> = {
-  bankpas_creditcard: 0.65,  // Higher savings - bank/credit cards lack expense management
-  declaratie_tool: 0.50,     // Lower savings - declaration tools have some automation
+  voorschot_declaratie: 0.75, // Highest savings - employees pay out-of-pocket, most manual
+  bankpas_creditcard: 0.65,   // Higher savings - bank/credit cards lack expense management
+  declaratie_tool: 0.50,      // Lower savings - declaration tools have some automation
 };
 
 // Constants

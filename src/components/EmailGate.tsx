@@ -9,6 +9,7 @@ const HUBSPOT_REGION = 'eu1';
 
 // Map current solution values to readable labels for HubSpot
 const SOLUTION_LABELS: Record<CalculatorInputs['currentSolution'], string> = {
+  voorschot_declaratie: 'Voorschot en declaratie',
   bankpas_creditcard: 'Bankpas/Creditcard',
   declaratie_tool: 'Declaratie oplossing/Tool',
 };

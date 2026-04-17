@@ -7,6 +7,7 @@ interface InputFormProps {
 }
 
 const CURRENT_SOLUTIONS = [
+  { value: 'voorschot_declaratie', label: 'Voorschot en declaratie' },
   { value: 'bankpas_creditcard', label: 'Bankpas / Creditcard' },
   { value: 'declaratie_tool', label: 'Declaratie oplossing / Tool' },
 ] as const;
