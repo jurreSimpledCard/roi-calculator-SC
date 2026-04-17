@@ -12,6 +12,6 @@ export default defineConfig({
     // Minify for production
     minify: 'esbuild',
   },
-  // Base path - adjust if deploying to a subdirectory
-  base: './',
+  // Base path for GitHub Pages
+  base: '/roi-calculator-SC/',
 })
