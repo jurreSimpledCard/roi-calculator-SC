@@ -15,16 +15,16 @@ export interface CalculatorResults {
   simplecardMonthlyCost: number;
 }
 
-// Efficiency multipliers based on current solution
+// Efficiency multipliers based on current solution (conservative estimates)
 const EFFICIENCY_MULTIPLIERS: Record<CalculatorInputs['currentSolution'], number> = {
-  voorschot_declaratie: 0.75, // Highest savings - employees pay out-of-pocket, most manual
-  bankpas_creditcard: 0.65,   // Higher savings - bank/credit cards lack expense management
-  declaratie_tool: 0.50,      // Lower savings - declaration tools have some automation
+  voorschot_declaratie: 0.45, // Highest savings - employees pay out-of-pocket, most manual
+  bankpas_creditcard: 0.35,   // Moderate savings - bank/credit cards lack expense management
+  declaratie_tool: 0.25,      // Lower savings - declaration tools have some automation
 };
 
 // Constants
-const HOURLY_RATE = 90; // Average hourly rate in EUR
-const PROCESS_SAVINGS_PER_EMPLOYEE = 15; // EUR per employee per month
+const HOURLY_RATE = 50; // Realistic fully-loaded cost for finance/admin staff in EUR
+const PROCESS_SAVINGS_PER_EMPLOYEE = 5; // EUR per employee per month (error reduction, faster approvals)
 
 // SimpledCard Essential + Business Accounts (DGS) pricing (as of 1-7-2025)
 // Business Accounts = zakelijke rekeningen met depositogarantiestelsel
