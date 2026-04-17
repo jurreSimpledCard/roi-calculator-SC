@@ -32,8 +32,8 @@ export function InputForm({ values, onChange, onSubmit }: InputFormProps) {
     <form className="input-form" onSubmit={handleSubmit}>
       <div className="form-header">
         <span className="step-badge">Stap 1 van 2</span>
-        <h2>Bereken uw besparing</h2>
-        <p>Vul onderstaande gegevens in om te zien hoeveel u kunt besparen met SimpledCard.</p>
+        <h2>Bereken je besparing</h2>
+        <p>Vul onderstaande gegevens in om te zien hoeveel je kunt besparen met SimpledCard.</p>
       </div>
 
       <div className="form-fields">
