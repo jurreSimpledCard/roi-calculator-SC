@@ -30,6 +30,10 @@ interface HubSpotFormProps {
     calculator_hours_per_month: number;
     calculator_current_solution: string;
     calculator_estimated_savings: number;
+    calculator_current_annual_cost: number;
+    calculator_simpledcard_annual_cost: number;
+    calculator_net_yearly_savings: number;
+    calculator_per_employee_savings: number;
   };
   onSubmitted?: () => void;
 }
@@ -76,6 +80,10 @@ export function HubSpotForm({
           setHiddenField('calculator_hours_per_month', String(hiddenFields.calculator_hours_per_month));
           setHiddenField('calculator_current_solution', hiddenFields.calculator_current_solution);
           setHiddenField('calculator_estimated_savings', String(hiddenFields.calculator_estimated_savings));
+          setHiddenField('calculator_current_annual_cost', String(hiddenFields.calculator_current_annual_cost));
+          setHiddenField('calculator_simpledcard_annual_cost', String(hiddenFields.calculator_simpledcard_annual_cost));
+          setHiddenField('calculator_net_yearly_savings', String(hiddenFields.calculator_net_yearly_savings));
+          setHiddenField('calculator_per_employee_savings', String(hiddenFields.calculator_per_employee_savings));
 
           setIsLoading(false);
         },

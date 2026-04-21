@@ -1,10 +1,12 @@
-import type { CalculatorInputs } from '../utils/calculations';
+import { type CalculatorInputs, type CalculatorResults, formatCurrency, formatNumber } from '../utils/calculations';
 
 interface InputFormProps {
   values: CalculatorInputs;
   onChange: (values: CalculatorInputs) => void;
   onSubmit: () => void;
+  results: CalculatorResults;
 }
+
 
 const CURRENT_SOLUTIONS = [
   { value: 'voorschot_declaratie', label: 'Voorschot en declaratie' },
@@ -12,7 +14,12 @@ const CURRENT_SOLUTIONS = [
   { value: 'declaratie_tool', label: 'Declaratie oplossing / Tool' },
 ] as const;
 
-export function InputForm({ values, onChange, onSubmit }: InputFormProps) {
+
+function sliderPercent(value: number, min: number, max: number) {
+  return `${((value - min) / (max - min)) * 100}%`;
+}
+
+export function InputForm({ values, onChange, onSubmit, results }: InputFormProps) {
   const handleChange = (field: keyof CalculatorInputs, value: string | number) => {
     onChange({
       ...values,
@@ -25,72 +32,65 @@ export function InputForm({ values, onChange, onSubmit }: InputFormProps) {
     onSubmit();
   };
 
-  const isValid = values.employees > 0 && values.monthlySpend > 0 && values.hoursPerMonth > 0;
-
   return (
     <form className="input-form" onSubmit={handleSubmit}>
       <div className="form-header">
         <span className="step-badge">Stap 1 van 2</span>
         <h2>Bereken je besparing</h2>
-        <p>Vul onderstaande gegevens in om te zien hoeveel je kunt besparen met SimpledCard.</p>
+        <p>Verschuif de sliders om te zien hoeveel je kunt besparen met SimpledCard.</p>
       </div>
 
-      <div className="form-fields">
-        <div className="form-group">
-          <label htmlFor="employees">
-            Aantal medewerkers die meer dan 1x per maand onkosten maken
-          </label>
+      <div className="slider-fields">
+        <div className="slider-group">
+          <label className="slider-label">Medewerkers met bedrijfsuitgaven</label>
+          <div className="slider-value">
+            {values.employees} <span className="slider-unit">personen</span>
+          </div>
           <input
-            type="number"
-            id="employees"
+            type="range"
             min="1"
-            max="10000"
-            placeholder="bijv. 25"
-            value={values.employees || ''}
-            onChange={(e) => handleChange('employees', parseInt(e.target.value) || 0)}
+            max="500"
+            step="1"
+            value={values.employees}
+            onChange={(e) => handleChange('employees', parseInt(e.target.value))}
+            style={{ '--slider-percent': sliderPercent(values.employees, 1, 500) } as React.CSSProperties}
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="monthlySpend">
-            Gemiddelde onkosten per medewerker per maand
-          </label>
-          <div className="input-with-prefix">
-            <span className="input-prefix">€</span>
-            <input
-              type="number"
-              id="monthlySpend"
-              min="5"
-              max="10000"
-              placeholder="bijv. 250"
-              value={values.monthlySpend || ''}
-              onChange={(e) => handleChange('monthlySpend', parseInt(e.target.value) || 0)}
-            />
+        <div className="slider-group">
+          <label className="slider-label">Gemiddelde onkosten per medewerker / maand</label>
+          <div className="slider-value">
+            € {formatNumber(values.monthlySpend)}
           </div>
+          <input
+            type="range"
+            min="50"
+            max="5000"
+            step="50"
+            value={values.monthlySpend}
+            onChange={(e) => handleChange('monthlySpend', parseInt(e.target.value))}
+            style={{ '--slider-percent': sliderPercent(values.monthlySpend, 50, 5000) } as React.CSSProperties}
+          />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="hoursPerMonth">
-            Uren per maand aan declaratieverwerking
-          </label>
-          <div className="input-with-suffix">
-            <input
-              type="number"
-              id="hoursPerMonth"
-              min="1"
-              max="500"
-              placeholder="bijv. 20"
-              value={values.hoursPerMonth || ''}
-              onChange={(e) => handleChange('hoursPerMonth', parseInt(e.target.value) || 0)}
-            />
-            <span className="input-suffix">uur</span>
+        <div className="slider-group">
+          <label className="slider-label">Uren per maand aan declaratieverwerking</label>
+          <div className="slider-value">
+            {values.hoursPerMonth} <span className="slider-unit">uur</span>
           </div>
+          <input
+            type="range"
+            min="1"
+            max="200"
+            step="1"
+            value={values.hoursPerMonth}
+            onChange={(e) => handleChange('hoursPerMonth', parseInt(e.target.value))}
+            style={{ '--slider-percent': sliderPercent(values.hoursPerMonth, 1, 200) } as React.CSSProperties}
+          />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="currentSolution">
-            Huidige oplossing
-          </label>
+        <div className="slider-group">
+          <label className="slider-label">Huidige oplossing</label>
           <select
             id="currentSolution"
             value={values.currentSolution}
@@ -105,12 +105,25 @@ export function InputForm({ values, onChange, onSubmit }: InputFormProps) {
         </div>
       </div>
 
+      <div className="live-summary">
+        <div className="live-summary-row">
+          <span className="live-summary-label">Jouw team verwerkt</span>
+          <span className="live-summary-value">{formatCurrency(values.employees * values.monthlySpend * 12)}</span>
+          <span className="live-summary-detail">aan onkosten per jaar</span>
+        </div>
+        <div className="live-summary-divider" />
+        <div className="live-summary-row">
+          <span className="live-summary-label">En besteedt daaraan</span>
+          <span className="live-summary-value-sm">{formatCurrency(results.currentAnnualCost)}</span>
+          <span className="live-summary-detail">per jaar aan handmatige verwerking</span>
+        </div>
+      </div>
+
       <button
         type="submit"
         className="btn-primary"
-        disabled={!isValid}
       >
-        Bereken mijn besparing
+        Ontdek je besparing
         <svg
           width="20"
           height="20"

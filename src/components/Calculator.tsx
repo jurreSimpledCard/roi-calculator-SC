@@ -1,15 +1,14 @@
 import { useState, useMemo } from 'react';
 import { InputForm } from './InputForm';
 import { ResultsPreview } from './ResultsPreview';
-import { EmailGate } from './EmailGate';
 import { type CalculatorInputs, calculateROI } from '../utils/calculations';
 
-type Step = 'input' | 'results' | 'email';
+type Step = 'input' | 'results';
 
 const DEFAULT_INPUTS: CalculatorInputs = {
-  employees: 0,
-  monthlySpend: 0,
-  hoursPerMonth: 0,
+  employees: 25,
+  monthlySpend: 250,
+  hoursPerMonth: 20,
   currentSolution: 'voorschot_declaratie',
 };
 
@@ -27,16 +26,8 @@ export function Calculator() {
     setStep('results');
   };
 
-  const handleUnlock = () => {
-    setStep('email');
-  };
-
   const handleBackToInput = () => {
     setStep('input');
-  };
-
-  const handleBackToResults = () => {
-    setStep('results');
   };
 
   return (
@@ -47,22 +38,15 @@ export function Calculator() {
             values={inputs}
             onChange={handleInputChange}
             onSubmit={handleCalculate}
+            results={results}
           />
         )}
 
         {step === 'results' && (
           <ResultsPreview
-            results={results}
-            onBack={handleBackToInput}
-            onUnlock={handleUnlock}
-          />
-        )}
-
-        {step === 'email' && (
-          <EmailGate
             inputs={inputs}
             results={results}
-            onBack={handleBackToResults}
+            onBack={handleBackToInput}
           />
         )}
       </div>

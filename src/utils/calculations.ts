@@ -13,6 +13,11 @@ export interface CalculatorResults {
   totalYearlySavings: number;
   roi: number;
   simplecardMonthlyCost: number;
+  currentAnnualCost: number;
+  simplecardAnnualCost: number;
+  netYearlySavings: number;
+  perEmployeeSavings: number;
+  recommendedBundle: string;
 }
 
 // Efficiency multipliers based on current solution (conservative estimates)
@@ -44,18 +49,21 @@ const SIMPLEDCARD_BUNDLES = [
 // Price per extra card outside bundle
 const EXTRA_CARD_PRICE = 15;
 
-function getSimplecardMonthlyCost(employees: number): number {
+function getSimplecardBundle(employees: number): { price: number; name: string } {
   // Find the smallest bundle that fits
   const bundle = SIMPLEDCARD_BUNDLES.find(b => b.maxCards >= employees);
 
   if (bundle) {
-    return bundle.price;
+    return { price: bundle.price, name: `Bundel ${bundle.name}` };
   }
 
   // For more than 500 cards, use largest bundle + extra cards
   const largestBundle = SIMPLEDCARD_BUNDLES[SIMPLEDCARD_BUNDLES.length - 1];
   const extraCards = employees - largestBundle.maxCards;
-  return largestBundle.price + (extraCards * EXTRA_CARD_PRICE);
+  return {
+    price: largestBundle.price + (extraCards * EXTRA_CARD_PRICE),
+    name: `Bundel ${largestBundle.name} + ${extraCards} extra`,
+  };
 }
 
 export function calculateROI(inputs: CalculatorInputs): CalculatorResults {
@@ -74,8 +82,21 @@ export function calculateROI(inputs: CalculatorInputs): CalculatorResults {
   const totalMonthlySavings = timeSavingsCost + processSavings;
   const totalYearlySavings = totalMonthlySavings * 12;
 
+  // Current annual cost of manual processing
+  const currentAnnualCost = inputs.hoursPerMonth * HOURLY_RATE * 12;
+
   // SimpledCard cost based on bundle pricing
-  const simplecardMonthlyCost = getSimplecardMonthlyCost(inputs.employees);
+  const bundle = getSimplecardBundle(inputs.employees);
+  const simplecardMonthlyCost = bundle.price;
+  const simplecardAnnualCost = simplecardMonthlyCost * 12;
+
+  // Net savings after SimpledCard cost
+  const netYearlySavings = totalYearlySavings - simplecardAnnualCost;
+
+  // Per-employee savings
+  const perEmployeeSavings = inputs.employees > 0
+    ? Math.round(netYearlySavings / inputs.employees)
+    : 0;
 
   // ROI calculation: (savings - cost) / cost * 100
   const netMonthlySavings = totalMonthlySavings - simplecardMonthlyCost;
@@ -91,6 +112,11 @@ export function calculateROI(inputs: CalculatorInputs): CalculatorResults {
     totalYearlySavings: Math.round(totalYearlySavings),
     roi,
     simplecardMonthlyCost: Math.round(simplecardMonthlyCost),
+    currentAnnualCost: Math.round(currentAnnualCost),
+    simplecardAnnualCost: Math.round(simplecardAnnualCost),
+    netYearlySavings: Math.round(netYearlySavings),
+    perEmployeeSavings,
+    recommendedBundle: bundle.name,
   };
 }
 
