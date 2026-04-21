@@ -142,114 +142,15 @@ export function ResultsPreview({ inputs, results, onBack }: ResultsPreviewProps)
             />
           </div>
         ) : (
-          <div className="report-unlocked">
-            <div className="report-unlocked-header">
-              <div className="success-badge">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6 10l3 3 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                Rapport ontgrendeld
-              </div>
-              <h3>Volledige breakdown</h3>
+          <div className="report-sent">
+            <div className="report-sent-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5"/>
+              </svg>
             </div>
-
-            <div className="breakdown-list">
-              <div className="breakdown-item">
-                <div className="breakdown-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5"/>
-                    <path d="M12 7v5l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                  </svg>
-                </div>
-                <div className="breakdown-content">
-                  <span className="breakdown-label">Tijdsbesparing</span>
-                  <span className="breakdown-value">
-                    {formatNumber(results.timeSavingsHours, 1)} uur/maand
-                  </span>
-                </div>
-              </div>
-
-              <div className="breakdown-item">
-                <div className="breakdown-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="3" y="6" width="18" height="12" rx="2" stroke="currentColor" strokeWidth="1.5"/>
-                    <path d="M3 10h18" stroke="currentColor" strokeWidth="1.5"/>
-                  </svg>
-                </div>
-                <div className="breakdown-content">
-                  <span className="breakdown-label">Besparing op tijdskosten</span>
-                  <span className="breakdown-value">
-                    {formatCurrency(results.timeSavingsCost)} /maand
-                  </span>
-                </div>
-              </div>
-
-              <div className="breakdown-item">
-                <div className="breakdown-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1.5"/>
-                  </svg>
-                </div>
-                <div className="breakdown-content">
-                  <span className="breakdown-label">Procesoptimalisatie</span>
-                  <span className="breakdown-value">
-                    {formatCurrency(results.processSavings)} /maand
-                  </span>
-                </div>
-              </div>
-
-              <div className="breakdown-item">
-                <div className="breakdown-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                  </svg>
-                </div>
-                <div className="breakdown-content">
-                  <span className="breakdown-label">SimpledCard kosten ({results.recommendedBundle})</span>
-                  <span className="breakdown-value breakdown-value-cost">
-                    -{formatCurrency(results.simplecardMonthlyCost)} /maand
-                  </span>
-                </div>
-              </div>
-
-              <div className="breakdown-divider" />
-
-              <div className="breakdown-item breakdown-item-total">
-                <div className="breakdown-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 8v-4a2 2 0 00-2-2h-4a2 2 0 00-2 2v4" stroke="currentColor" strokeWidth="1.5"/>
-                    <rect x="3" y="8" width="18" height="13" rx="2" stroke="currentColor" strokeWidth="1.5"/>
-                    <path d="M12 12v4m-2-2h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                  </svg>
-                </div>
-                <div className="breakdown-content">
-                  <span className="breakdown-label">Netto jaarlijkse besparing</span>
-                  <span className="breakdown-value breakdown-value-total">
-                    {formatCurrency(results.netYearlySavings)}
-                  </span>
-                </div>
-              </div>
-
-              <div className="breakdown-item">
-                <div className="breakdown-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.5"/>
-                    <path d="M5 20c0-3.314 3.134-6 7-6s7 2.686 7 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                  </svg>
-                </div>
-                <div className="breakdown-content">
-                  <span className="breakdown-label">Besparing per medewerker</span>
-                  <span className="breakdown-value">
-                    {formatCurrency(results.perEmployeeSavings)} /jaar
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <p className="report-note">
-              Een van onze specialisten neemt binnenkort contact met je op om je mogelijkheden te bespreken.
-            </p>
+            <h3>Bedankt!</h3>
+            <p>Je ontvangt je persoonlijke besparingsrapport per e-mail met een volledige breakdown van je besparing.</p>
           </div>
         )}
       </div>
