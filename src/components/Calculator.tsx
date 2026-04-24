@@ -51,11 +51,6 @@ export function Calculator() {
         )}
       </div>
 
-      <footer className="calculator-footer">
-        <a href="https://simpledcard.com" target="_blank" rel="noopener noreferrer">
-          Powered by SimpledCard
-        </a>
-      </footer>
     </div>
   );
 }
